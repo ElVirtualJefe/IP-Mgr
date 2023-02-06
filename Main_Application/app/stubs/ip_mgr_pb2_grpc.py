@@ -2,10 +2,10 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-import _shared_pb2 as __shared__pb2
-import ipAddress_pb2 as ipAddress__pb2
-import subnet_pb2 as subnet__pb2
-import vlan_pb2 as vlan__pb2
+import app.descriptors._shared_pb2 as __shared__pb2
+import app.descriptors.ipAddress_pb2 as ipAddress__pb2
+import app.descriptors.subnet_pb2 as subnet__pb2
+import app.descriptors.vlan_pb2 as vlan__pb2
 
 
 class IpAddressServiceStub(object):
