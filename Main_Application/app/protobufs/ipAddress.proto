@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+import "app/protobufs/shared.proto";
+
+service IpAddressService {
+    rpc GetIpAddressById (shared.id) returns (IpAddressResponse) {}
+    rpc GetIpAddressByName (shared.name) returns (IpAddressResponse) {}
+    rpc GetIpAddressBySubnet (shared.id) returns (IpAddressResponse) {}
+    rpc AddIpAddress (ipAddress) returns (IpAddressResponse) {}
+    rpc UpdateIpAddress (ipAddress) returns (IpAddressResponse) {}
+    rpc DeleteIpAddress (shared.id) returns (shared.ResponseStatus) {}
+}
+
+message ipAddress {
+    string id = 1;
+    string subnet_id = 2;
+    string ipAddress = 3;
+    bool is_gateway = 4;
+    string description = 5;
+    string hostname = 6;
+    string macAddress = 7;
+    string owner = 8;
+    string state_id = 9;
+    string dataLastSeen = 10;
+    string dateLastEdited = 11;
+    string dateCreated = 12;
+}
+
+message IpAddressResponse {
+    ipAddress ipAddress = 1;
+    shared.ResponseStatus status = 2;
+}
+
