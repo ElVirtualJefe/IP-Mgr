@@ -1,7 +1,7 @@
-
+syntax = "proto3";
 
 message ResponseStatus {
-    int statusCode = 1;
+    int32 statusCode = 1;
     oneof message {
         string responseMessage = 2;
         string errorMessage = 3;
@@ -9,9 +9,9 @@ message ResponseStatus {
 }
 
 message id {
-    required string id = 1;
+    string id = 1;
 }
 
 message name {
-    required string name = 1;
+    string name = 1;
 }

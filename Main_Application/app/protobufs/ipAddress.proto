@@ -1,15 +1,17 @@
 syntax = "proto3";
 
-import "app/protobufs/shared.proto";
+import public "_shared.proto";
 
+/*
 service IpAddressService {
-    rpc GetIpAddressById (shared.id) returns (IpAddressResponse) {}
-    rpc GetIpAddressByName (shared.name) returns (IpAddressResponse) {}
-    rpc GetIpAddressBySubnet (shared.id) returns (IpAddressResponse) {}
+    rpc GetIpAddressById (id) returns (IpAddressResponse) {}
+    rpc GetIpAddressByName (name) returns (IpAddressResponse) {}
+    rpc GetIpAddressBySubnet (id) returns (IpAddressResponse) {}
     rpc AddIpAddress (ipAddress) returns (IpAddressResponse) {}
     rpc UpdateIpAddress (ipAddress) returns (IpAddressResponse) {}
-    rpc DeleteIpAddress (shared.id) returns (shared.ResponseStatus) {}
+    rpc DeleteIpAddress (id) returns (ResponseStatus) {}
 }
+*/
 
 message ipAddress {
     string id = 1;
@@ -28,6 +30,6 @@ message ipAddress {
 
 message IpAddressResponse {
     ipAddress ipAddress = 1;
-    shared.ResponseStatus status = 2;
+    ResponseStatus status = 2;
 }
 

@@ -1,5 +1,34 @@
+syntax = "proto3";
 
+import "ipAddress.proto";
+import "subnet.proto";
+import "vlan.proto";
 
-import "app/protobufs/ipAddress.proto"
-import "app/protobufs/subnet.proto"
+service IpAddressService {
+    rpc GetIpAddressById (id) returns (IpAddressResponse) {}
+    rpc GetIpAddressByName (name) returns (IpAddressResponse) {}
+    rpc GetIpAddressBySubnet (id) returns (IpAddressResponse) {}
+    rpc AddIpAddress (ipAddress) returns (IpAddressResponse) {}
+    rpc UpdateIpAddress (ipAddress) returns (IpAddressResponse) {}
+    rpc DeleteIpAddress (id) returns (ResponseStatus) {}
+}
+
+service SubnetService {
+    rpc GetSubnetById (id) returns (SubnetResponse) {}
+    rpc GetSubnetByName (name) returns (SubnetResponse) {}
+    rpc GetSubnetByIpAddress (id) returns (SubnetResponse) {}
+    rpc AddSubnet (subnet) returns (SubnetResponse) {}
+    rpc UpdateSubnet (subnet) returns (SubnetResponse) {}
+    rpc DeleteSubnet (id) returns (ResponseStatus) {}
+}
+
+service vLANService {
+    rpc GetVlanById (id) returns (vLANResponse) {}
+    rpc GetVlanByName (name) returns (vLANResponse) {}
+    rpc GetVlanByIpAddress (id) returns (vLANResponse) {}
+    rpc AddVlan (vlan) returns (vLANResponse) {}
+    rpc UpdateVlan (vlan) returns (vLANResponse) {}
+    rpc DeleteVlan (id) returns (ResponseStatus) {}
+}
+
 

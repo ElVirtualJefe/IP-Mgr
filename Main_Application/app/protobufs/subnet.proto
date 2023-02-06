@@ -1,19 +1,11 @@
 syntax = "proto3";
 
-import "app/protobufs/shared.proto";
-
-service SubnetService {
-    rpc GetSubnetById (shared.id) returns (SubnetResponse) {}
-    rpc GetSubnetByName (shared.name) returns (SubnetResponse) {}
-    rpc GetSubnetByIpAddress (shared.id) returns (SubnetResponse) {}
-    rpc AddSubnet (subnet) returns (SubnetResponse) {}
-    rpc UpdateSubnet (subnet) returns (SubnetResponse) {}
-    rpc DeleteSubnet (shared.id) returns (shared.ResponseStatus) {}
-}
+import public "_shared.proto";
 
 message subnet {
     string id = 1;
     string subnet_id = 2;
+    string vlan_id = 12;
     string ipAddress = 3;
     bool is_gateway = 4;
     string description = 5;
@@ -27,5 +19,5 @@ message subnet {
 
 message SubnetResponse {
     subnet subnet = 1;
-    shared.ResponseStatus status = 2;
+    ResponseStatus status = 2;
 }
