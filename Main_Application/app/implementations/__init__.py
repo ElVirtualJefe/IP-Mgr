@@ -1,3 +1,3 @@
-from app.implementations.ipAddressServer import IpAddressServiceServicer
+from .ipAddressServer import IpAddressServiceServicer
 
 

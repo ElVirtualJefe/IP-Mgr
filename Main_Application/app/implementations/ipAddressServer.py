@@ -2,18 +2,19 @@ from uuid import UUID
 
 import psycopg2.errors as err
 from sqlalchemy import exc as sa_exc
-from app.models import ipAddress
+#from .models import ipAddress
 #import sqlalchemy
 
-import app.stubs.ipAddress_pb2_grpc
-from app.stubs import ipAddress_pb2
-from app.models.ipAddress import ipAddressModel
+import ip_mgr_pb2_grpc as svc
+#from descriptors import ipAddress_pb2
+import ipAddress_pb2
+from app.models import ipAddressModel
 import grpc
 from traceback import print_exc
 from app import sess as session
 
 
-class IpAddressServiceServicer(app.stubs.ipAddress_pb2_grpc.IpAddressServiceServicer):
+class IpAddressServiceServicer(svc.IpAddressServiceServicer):
     
     def __init__(self):
         return
