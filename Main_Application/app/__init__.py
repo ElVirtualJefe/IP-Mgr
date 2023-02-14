@@ -1,16 +1,10 @@
-import pathlib, sys
+
+
+import inspect, sys
 
 print('__name__ = %s' % (__name__))
-#print('__file__ = %s' % (__file__))
-cwd = pathlib.Path(__file__).parent.resolve()
-#print('%s\stubs' % cwd)
-#print('%s\descriptors' % cwd)
-#print(sys.path)
-#sys.path.append(cwd)
-sys.path.append('%s\stubs' % cwd)
-sys.path.append('%s\descriptors' % cwd)
-#sys.path.append('%s\implementations' % cwd)
-#print(sys.path)
+#caller = Path(inspect.stack()[1][1]).resolve()
+#print(caller)
 
 
 _ONE_DAY_IN_SECONDS = 24 * 60 * 60
@@ -18,7 +12,7 @@ _ONE_DAY_IN_SECONDS = 24 * 60 * 60
 from configparser import ConfigParser
 
 config = ConfigParser()
-config.read("config.ini")
+config.read("Main_Application/config.ini")
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker,scoped_session
@@ -39,7 +33,7 @@ dbport = config.getint("postgres","DB_PORT")
 SQLALCHEMY_DATABASE_URI = f"postgresql+psycopg2://{username}:{password}@{dbserver}:{dbport}/{dbname}"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-print('COnnecting to DB with URI: %s' % SQLALCHEMY_DATABASE_URI)
+#print('Connecting to DB with URI: %s' % SQLALCHEMY_DATABASE_URI)
 
 engine = create_engine(SQLALCHEMY_DATABASE_URI)
 db.create_all(engine)
@@ -48,10 +42,11 @@ Session = scoped_session(sessionmaker(bind=engine))
 sess = Session()
 
 
+
 import grpc,time
 from concurrent import futures
 from .implementations import IpAddressServiceServicer
-from app.stubs import ip_mgr_pb2_grpc as ip_mgr
+import ipAddress_pb2_grpc as ip_pb2_grpc
 
 
 """Start grpc server servicing FMS RPCs."""
@@ -60,7 +55,7 @@ print("Starting gRPC Server...")
 server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
 
 ipAddressServicer = IpAddressServiceServicer()
-ip_mgr.add_IpAddressServiceServicer_to_server(ipAddressServicer,server)
+ip_pb2_grpc.add_IpAddressServiceServicer_to_server(ipAddressServicer,server)
 
 # start server
 server_port = config.get("server","PORT")

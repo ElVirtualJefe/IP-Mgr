@@ -5,10 +5,10 @@ from sqlalchemy import exc as sa_exc
 #from .models import ipAddress
 #import sqlalchemy
 
-import ip_mgr_pb2_grpc as svc
+import ipAddress_pb2_grpc as svc
 #from descriptors import ipAddress_pb2
 import ipAddress_pb2
-from app.models import ipAddressModel
+from ..models import ipAddressModel
 import grpc
 from traceback import print_exc
 from app import sess as session
@@ -30,11 +30,21 @@ class IpAddressServiceServicer(svc.IpAddressServiceServicer):
                     if (ip == None):
                         raise err.NoDataFound
                     else: 
-                        print("Found %s with id %s" % (ip.ipAddress,request.id))
+                        print("Found %s with ID %s" % (ip.ipAddress,request.id))
                 case 'name':
-                    pass
+                    print("Searching for IP Address with name: %s..." % request.name)
+                    ip = session.query(ipAddressModel).filter_by(ipAddress=request.name).first()
+                    if (ip == None):
+                        raise err.NoDataFound
+                    else: 
+                        print("Found %s with name %s" % (ip.ipAddress,request.name))
                 case 'subnet':
-                    pass
+                    print("Searching for IP Addresses with Subnet ID: %s..." % request.id)
+                    ip = session.query(ipAddressModel).filter_by(subnet_id=request.id).first()
+                    if (ip == None):
+                        raise err.NoDataFound
+                    else: 
+                        print("Found %s IPs with Subnet ID %s" % (len(ip),request.id))
         except sa_exc.DataError as e:
             print("[ERROR] Invalid ID input: %s" % request.id)
             #print(e.args)
@@ -75,11 +85,19 @@ class IpAddressServiceServicer(svc.IpAddressServiceServicer):
 
 
     def GetIpAddressByName(self, request, context):
-        pass
+        resIpAddress = ipAddress_pb2.ipAddress()
+        #ip = ipAddressModel()
+        resIpAddress = self._getIpAddress(request,context,'name')
+
+        return ipAddress_pb2.IpAddressResponse(ipAddress=resIpAddress)
 
 
     def GetIpAddressBySubnet(self, request, context):
-        pass
+        resIpAddress = ipAddress_pb2.ipAddress()
+        #ip = ipAddressModel()
+        resIpAddress = self._getIpAddress(request,context,'subnet')
+
+        return ipAddress_pb2.IpAddressResponse(ipAddress=resIpAddress)
 
 
     def AddIpAddress(self, request, context):
@@ -93,4 +111,11 @@ class IpAddressServiceServicer(svc.IpAddressServiceServicer):
 
         return ipAddress_pb2.IpAddressResponse(ipAddress=newIpAddress)
 
+
+    def UpdateIpAddress(self,request,context):
+        pass
+
+
+    def DeleteIpAddress(self,request,context):
+        pass
 

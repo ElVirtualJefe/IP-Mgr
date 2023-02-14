@@ -2,6 +2,15 @@ syntax = "proto3";
 
 import public "_shared.proto";
 
+service IpAddressService {
+    rpc GetIpAddressById (id) returns (IpAddressResponse) {}
+    rpc GetIpAddressByName (name) returns (IpAddressResponse) {}
+    rpc GetIpAddressBySubnet (id) returns (IpAddressResponse) {}
+    rpc AddIpAddress (ipAddress) returns (IpAddressResponse) {}
+    rpc UpdateIpAddress (ipAddress) returns (IpAddressResponse) {}
+    rpc DeleteIpAddress (id) returns (ResponseStatus) {}
+}
+
 message ipAddress {
     string id = 1;
     string subnet_id = 2;

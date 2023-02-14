@@ -2,6 +2,15 @@ syntax = "proto3";
 
 import public "_shared.proto";
 
+service SubnetService {
+    rpc GetSubnetById (id) returns (SubnetResponse) {}
+    rpc GetSubnetByName (name) returns (SubnetResponse) {}
+    rpc GetSubnetByIpAddress (id) returns (SubnetResponse) {}
+    rpc AddSubnet (subnet) returns (SubnetResponse) {}
+    rpc UpdateSubnet (subnet) returns (SubnetResponse) {}
+    rpc DeleteSubnet (id) returns (ResponseStatus) {}
+}
+
 message subnet {
     string id = 1;
     string subnet_id = 2;

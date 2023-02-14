@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+import public "_shared.proto";
+
+service vLANService {
+    rpc GetVlanById (id) returns (vLANResponse) {}
+    rpc GetVlanByName (name) returns (vLANResponse) {}
+    rpc GetVlanByIpAddress (id) returns (vLANResponse) {}
+    rpc AddVlan (vlan) returns (vLANResponse) {}
+    rpc UpdateVlan (vlan) returns (vLANResponse) {}
+    rpc DeleteVlan (id) returns (ResponseStatus) {}
+}
+
+message vlan {
+    string id = 1;
+    string name = 2;
+    int32 vlanNumber = 3;
+    string description = 4;
+    string dataLastSeen = 5;
+    string dateLastEdited = 6;
+}
+
+message vLANResponse {
+    vlan vlan = 1;
+    ResponseStatus status = 2;
+}
